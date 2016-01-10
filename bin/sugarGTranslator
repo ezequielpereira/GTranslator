@@ -9,6 +9,19 @@ while [ -n "$2" ] ; do
      esac
      shift;shift
 done
-export LD_PRELOAD="$SUGAR_BUNDLE_PATH/lib/libsugarize.so"
+export GSETTINGS_SCHEMA_DIR=$SUGAR_BUNDLE_PATH/schemas
+glib-compile-schemas $SUGAR_BUNDLE_PATH/schemas
 export NET_WM_NAME="GTranslator"
-exec gtranslator
+if [ "`uname -a | grep x86_64`" ]; then
+    export LD_PRELOAD=$SUGAR_BUNDLE_PATH/lib64/libsugarize.so
+    export LD_LIBRARY_PATH=$SUGAR_BUNDLE_PATH/lib64:$LD_LIBRARY_PATH
+    exec gtranslator64
+elif [ "`uname -a | grep armv7l`" ]; then
+    export LD_PRELOAD=$SUGAR_BUNDLE_PATH/lib_arn/libsugarize.so
+    export LD_LIBRARY_PATH=$SUGAR_BUNDLE_PATH/lib_arm:$LD_LIBRARY_PATH
+    exec gtranslator_arm
+else
+    export LD_PRELOAD=$SUGAR_BUNDLE_PATH/lib32/libsugarize.so
+    export LD_LIBRARY_PATH=$SUGAR_BUNDLE_PATH/lib32:$LD_LIBRARY_PATH
+    exec gtranslator32
+fi
