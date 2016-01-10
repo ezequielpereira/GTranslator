@@ -1,0 +1,7 @@
+[Activity]
+name = GTranslator
+service_name = org.x.GTranslator
+icon = GTranslator
+activity_version = 1
+show_launcher = yes
+exec = sugarGTranslator
