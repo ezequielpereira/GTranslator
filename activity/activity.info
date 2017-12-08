@@ -5,3 +5,4 @@ icon = GTranslator
 activity_version = 1
 show_launcher = yes
 exec = sugarGTranslator
+repository = https://github.com/sugarlabs/gtranslator.git
